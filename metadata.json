@@ -1,0 +1,6 @@
+{
+  "name": "Storytera",
+  "description": "Native WebView story container with offline reading support, custom notepad, AdMob banner & interstitial ads, and periodic reminders to read stories.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
