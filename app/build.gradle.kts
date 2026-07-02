@@ -23,19 +23,22 @@ testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
 
 signingConfigs {
-create("release") {
-val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
-storeFile = file(keystorePath)
-storePassword = System.getenv("STORE_PASSWORD")
-keyAlias = "upload"
-keyPassword = System.getenv("KEY_PASSWORD")
-}
-create("debugConfig") {
-storeFile = file("${rootDir}/debug.keystore")
-storePassword = "android"
-keyAlias = "androiddebugkey"
-keyPassword = "android"
-}
+    create("release") {
+        // Look for the environment variable, default to local root directory if empty
+        val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
+        storeFile = file(keystorePath)
+        
+        // This handles both GitHub environment variables and local properties gracefully
+        storePassword = System.getenv("STORE_PASSWORD") ?: project.findProperty("STORE_PASSWORD")?.toString()
+        keyAlias = "upload"
+        keyPassword = System.getenv("KEY_PASSWORD") ?: project.findProperty("KEY_PASSWORD")?.toString()
+    }
+    create("debugConfig") {
+        storeFile = file("${rootDir}/debug.keystore")
+        storePassword = "android"
+        keyAlias = "androiddebugkey"
+        keyPassword = "android"
+    }
 }
 
 buildTypes {
