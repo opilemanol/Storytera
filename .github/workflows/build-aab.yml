@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      STORE_PASSWORD: android123
-      KEY_PASSWORD: android123
+      STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
       KEYSTORE_PATH: ${{ github.workspace }}/my-upload-key.jks
 
     steps:
@@ -33,17 +33,9 @@ jobs:
         with:
           validate-wrappers: false
 
-      - name: Create release keystore
+      - name: Decode original keystore file
         run: |
-          keytool -genkeypair -v \
-            -keystore "$KEYSTORE_PATH" \
-            -storepass "$STORE_PASSWORD" \
-            -keypass "$KEY_PASSWORD" \
-            -alias upload \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -dname "CN=Adeniyi, OU=TeramayoTv, O=TeramayoTv, L=Ibadan, S=Oyo, C=NG"
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > "$KEYSTORE_PATH"
 
       - name: Build Signed Release AAB
         run: gradle bundleRelease --stacktrace
@@ -53,9 +45,3 @@ jobs:
         with:
           name: app-release-aab
           path: app/build/outputs/bundle/release/app-release.aab
-
-      - name: Upload Keystore Backup
-        uses: actions/upload-artifact@v4
-        with:
-          name: save-this-keystore
-          path: my-upload-key.jks
