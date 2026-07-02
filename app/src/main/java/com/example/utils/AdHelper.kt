@@ -14,7 +14,7 @@ object AdHelper {
     
     // AdMob standard test ad unit IDs
     const val BANNER_TEST_ID = "ca-app-pub-5927630860510493/6623653632"
-    const val INTERSTITIAL_TEST_ID = "ca-app-pub-3940256099942544/1033173712"
+    const val INTERSTITIAL_TEST_ID = "ca-app-pub-5927630860510493/4881985103"
 
     private var mInterstitialAd: InterstitialAd? = null
     var isInterstitialLoading = false
