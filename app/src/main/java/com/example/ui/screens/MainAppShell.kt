@@ -101,7 +101,7 @@ fun MainAppShell() {
         ) {
             composable(Screen.Stories.route) {
                 StoriesScreen(
-                    url = "https://studio--teramayo.us-central1.hosted.app",
+                    url = "https://storytera.ai.studio",
                     modifier = Modifier.fillMaxSize()
                 )
             }
