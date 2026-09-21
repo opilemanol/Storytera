@@ -51,6 +51,9 @@ jobs:
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_PATH"
           test -s "$KEYSTORE_PATH" || { echo "::error::Keystore file is empty after decoding"; exit 1; }
 
+      - name: Regenerate Gradle Wrapper JAR
+        run: gradle wrapper
+
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
